@@ -41,3 +41,24 @@ bin_ip = "00001010000000010000000111000011"
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+network_address = input("Введите IP-сеть в формате: 10.1.1.0/24\n")
+network = network_address.split('/')[0].split('.')
+network_bin = "{0:08b}{1:08b}{2:08b}{3:08b}".format(int(network[0]), int(network[1]), int(network[2]), int(network[3]))
+
+#network_bin = network_bin.replace(',','')
+print(network_bin)
+
+mask = int(network_address.split('/')[1])
+mask_bin = '1' * mask + '0' * (32-mask)
+network = network_bin[:mask] + '0'* (32-int(mask))
+network = [int(network[0:8],2),int(network[8:16],2),int(network[16:24],2),int(network[24:],2)]
+template = '''
+Network:
+{0:<10}{1:<10}{2:<10}{3:<10}
+{0:08b}  {1:08b}  {2:08b}  {3:08b}
+
+Mask:
+/{8}
+{4:<10}{5:<10}{6:<10}{7:<10}
+{4:08b}  {5:08b}  {6:08b}  {7:08b}'''
+print(template.format(int(network[0]), int(network[1]), int(network[2]), int(network[3]), int(mask_bin[0:8],2), int(mask_bin[8:16],2), int(mask_bin[16:24],2), int(mask_bin[24:],2),mask))
