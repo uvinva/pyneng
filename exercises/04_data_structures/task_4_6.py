@@ -28,3 +28,10 @@ Next-Hop              {}
 Last update           {}
 Outbound Interface    {}
 """
+ospf_route = ospf_route.split()
+prefix = ospf_route[0]
+ad_metric = ospf_route[1].strip('[]')
+next_hop = ospf_route[3].rstrip(',')
+last_update = ospf_route[4].rstrip(',')
+outband_interface = ospf_route[5]
+print(template.format(prefix, ad_metric, next_hop, last_update, outband_interface))

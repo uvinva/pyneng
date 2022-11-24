@@ -49,3 +49,37 @@ bin_ip = "00001010000000010000000111000011"
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+network = input('Введите адрес сети: ')
+network_list = network.split('/')
+ip = network_list[0].split('.')
+mask = int(network_list[1])
+mask_bin = '1' * mask + '0' * (32-mask)
+mask_oct1 = int(mask_bin[0:8],2)
+mask_oct2 = int(mask_bin[8:16],2)
+mask_oct3 = int(mask_bin[16:24],2)
+mask_oct4 = int(mask_bin[24:32],2) 
+ip0 = int(ip[0])
+ip1 = int(ip[1])
+ip2 = int(ip[2])
+ip3 = int(ip[3])
+ip_bin1 = (8-len(bin(ip0)[2:])) * '0' + bin(ip0)[2:]
+ip_bin2 = (8-len(bin(ip1)[2:])) * '0' + bin(ip1)[2:]
+ip_bin3 = (8-len(bin(ip2)[2:])) * '0' + bin(ip2)[2:]
+ip_bin4 = (8-len(bin(ip3)[2:])) * '0' + bin(ip3)[2:]
+ip_bin = ip_bin1 + ip_bin2 + ip_bin3 + ip_bin4
+ip_net_bin = ip_bin[:mask] + (32-mask) * '0'
+ip0 = int(ip_net_bin[0:8],2)
+ip1 = int(ip_net_bin[8:16],2)
+ip2 = int(ip_net_bin[16:24],2)
+ip3 = int(ip_net_bin[24:32],2)
+template = '''
+Network:
+{0:<10}{1:<10}{2:<10}{3:<10}
+{0:08b}  {1:08b}  {2:08b}  {3:08b}
+
+Mask:
+/{4}
+{5:<10}{6:<10}{7:<10}{8:<10}
+{5:08b}  {6:08b}  {7:08b}  {8:08b}
+'''
+print(template.format(ip0,ip1,ip2,ip3,mask,mask_oct1,mask_oct2,mask_oct3,mask_oct4))
